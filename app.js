@@ -6,17 +6,20 @@ let btns = ["red","green","yellow","purple"];
 let started = false;
 let level = 0;
 
+// step - 1  ; to start the game 
+
 let h2 = document.querySelector("h2");
+
 
 document.addEventListener("keypress",function(){
     if(started==false){
-        console.log("Game started");
+        console.log("Game started");  // for our reference 
         started=true;
 
-        levelUp();
+        levelUp();   // end of step - 1
     }
 });
-function gameFlash(btn){
+function gameFlash(btn){            // this function will make the button flash as soon as the level begins
     btn.classList.add("gameflash");
     setTimeout(function(){
         btn.classList.remove("gameflash");
@@ -30,17 +33,18 @@ function userFlash(btn){
     },250 );
 }
 
+// step - 2  ; to go to the next level
 function levelUp(){
-    userSeq = [];
+    userSeq = [];    // after every level the user sequence should become empty 
     level++;
     h2.innerText=`Level ${level}`;
     let randIdx = Math.floor(Math.random()*3);
     let randColor = btns[randIdx];
-    let randBtn = document.querySelector(`.${randColor}`);
+    let randBtn = document.querySelector(`.${randColor}`); // Make sure that the elements in the btns array match the classnames (colors) 
     gameSeq.push(randColor);
-    gameFlash(randBtn);
+    gameFlash(randBtn);  // end of step - 2 
 }
-function checkAns(idx){
+function checkAns(idx){    // step - 4 ' to check if user sequence and game sequence matches 
    
     if(userSeq[idx] === gameSeq[idx]){
         if(userSeq.length == gameSeq.length){
@@ -53,7 +57,7 @@ function checkAns(idx){
             document.querySelector("body").style.backgroundColor = "white";
    
         },150);
-        reset();
+        reset();     // step - 5 ; reset if failed to clear the level
     }
 }
 
@@ -61,10 +65,11 @@ function btnPress(){
     let btn = this;
     userFlash(btn);
     userColor = btn.getAttribute("id");
-    userSeq.push(userColor);
-    checkAns(userSeq.length-1);
+    userSeq.push(userColor);          // here we add the color clicked by the user to the userSeq array
+    checkAns(userSeq.length-1);       
 }
 
+// step - 3 ; when the user clicks on a button after a button is flashed
 let allBtns = document.querySelectorAll(".btn");
 for(btn of allBtns){
     btn.addEventListener("click",btnPress);
