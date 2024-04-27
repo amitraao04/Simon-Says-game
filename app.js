@@ -5,6 +5,7 @@ let btns = ["red","green","yellow","purple"];
 
 let started = false;
 let level = 0;
+let scores = [];
 
 // step - 1  ; to start the game 
 
@@ -51,7 +52,8 @@ function checkAns(idx){    // step - 4 ' to check if user sequence and game sequ
             setTimeout(levelUp, 1000);
         }
     }else{
-        h2.innerHTML = `Game over! Your score was <b>${level}</b> <br> Press any key to start`;
+        printHighscore();
+        h2.innerHTML = `Game over! Your score was <b>${level-1}</b> <br> Press any key to start`;
         document.querySelector("body").style.backgroundColor = "red";
         setTimeout(function(){
             document.querySelector("body").style.backgroundColor = "white";
@@ -59,6 +61,18 @@ function checkAns(idx){    // step - 4 ' to check if user sequence and game sequ
         },150);
         reset();     // step - 5 ; reset if failed to clear the level
     }
+}
+
+function printHighscore(){
+    let highscore = document.querySelector(".highscore");
+    scores.push(level);
+    let hscore = 0;
+    for(score of scores){
+        if(score>hscore){
+            hscore = score;
+        }
+    }
+    highscore.innerText = `High Score - ${hscore-1}`;
 }
 
 function btnPress(){
@@ -81,3 +95,4 @@ function reset(){
     userSeq = [];
     level = 0;
 }
+
